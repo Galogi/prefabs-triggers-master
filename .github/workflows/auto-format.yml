@@ -1,0 +1,35 @@
+name: Auto Format C#
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  format:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
+
+      # השתמשי בכלי מהמניפסט אם יצרת (A שלב 1)
+      - name: Restore dotnet tools
+        run: dotnet tool restore
+
+      - name: Run dotnet-format (fix in place)
+        run: dotnet tool run dotnet-format Assets/Scripts --folder --verbosity minimal
+
+      - name: Commit & push changes (if any)
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore(format): auto-apply dotnet-format"
+          file_pattern: |
+            Assets/**/*.cs
