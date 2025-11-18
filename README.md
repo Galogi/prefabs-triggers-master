@@ -2,6 +2,7 @@
 
 
 link for the game : https://amit-and-gal.itch.io/prefabs-triggers-master-gal
+
 A project with step-by-step scenes illustrating some of the formal elements of game development in Unity, including: 
 
 * Prefabs for instantiating new objects;
